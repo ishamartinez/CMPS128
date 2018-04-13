@@ -1,0 +1,31 @@
+Psuedo Code#For this I assume that The replicas gossiped (Node_A, Node_B...etc) have attribute values String Val, String ID, LinkedList VC, and Int Timestamp#Handles the gossip protocolGossip(Node_A, Node_B):		For all Nodes in Node_B:		if(Node_B.Val exists in Node_A):			if(CheckConcurrency(Node_A.VC, Node_B.VC)):				Merge(Node_A, Node_B);			else:				if(!CheckEqual(Node_A.VC, Node_B.VC)):					Merge(Node_A, Node_B);				else:					do nothing;		else:			Add(Node_A, Node_B.Val);
+#Checks whether two clocks are concurrent or not, returns true if they are concurrent returns false if they are not.CheckConcurrency(VectorClock_A, VectorClock_B):
+	count = 0;
+	For all i in VectorClock_A & VectorClock_B:
+		if(A.VC[i] <= B.VC[i]):
+			count += 0;
+		else:
+			count--;	if(count == 0):			return false;		count = 0;
+		For all i in VectorClock_A & VectorClock_B:
+		if(A.VC[i] >= B.VC[i]):
+			count += 0;
+		else:
+			count++;
+	if(count == 0):
+		return false;
+	else:
+		return true;
+		
+#Checks if two clocks are equal
+CheckEqual(VectorClock_A, VectorClock_B):
+	count = 0;
+	for all i in VectorClock_A & VectorClock_B:
+		if(A.VC[i] == B.VC[i]):
+			count+=0;
+		else:
+			count++;
+	if(count != 0):
+		return false;
+	else:
+		return true;
+			#Merge merges two attributesMerge(Node_A, Node_B):	if(Node_A.Val exists in Node_B):			if(Lessthan(Node_A, Node_B):					Node_A.Val = Node_B.Val;									Node_A.Timestamp = Node_B.Timestamp;						ClockMerge(Node_A.VC, Node_B.VC);					if(CheckConcurrency(Node_A.VC, Node_B.VC):						ClockMerge(Node_A.VC, Node_B.VC);						if(Node_A.Timestamp < Node_B.Timestamp):							Node_A.Timestamp = Node_B.Timestamp;		#Greaterthan checks if Vector Clock A is greater than or equal to Vector Clock BGreaterthan(A, B):	count = 0;		For all i in A & B:		if(A.VC[i] >= B.VC[i]):			count += 0;		else:			count++;	if(count != 0):		return false;	else:		return true;#Lessthan checks if Vector Clock A is less than or equal to Vector Clock BLessthan(A, B):	count = 0;		For all i in A & B:		if(A.VC[i] <= B.VC[i]):			count += 0;		else:			count++;	if(count != 0):		return false;	else:		return true;		#ClockMerge Merges two vector clocksClockMerge(A, B):	For all i in A & B:				if(A.VC[i] < B.VC[i]):					A.VC[i] = B.VC[i];		

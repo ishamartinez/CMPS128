@@ -1,0 +1,9 @@
+CMPS 128 Homework 3
+Use Ctrl + C to stop server
+
+Very rarely test_m fails (once or twice in a few dozen tests)
+- Not 100% why but it may have to do with my changing the sleep times to lower numbers or replica gossip service accidentally scheduling the same target back to back.
+
+There is a bug with test_n - for some reason it occasionally tries to kill a node that was already killed and you expect the number_of_nodes to be lower when it can't be. Could not figure out how to correct this issue. If the bug does not occur (happens randomly) the test passes successfully.
+
+Thank You for all your time TAs :)
